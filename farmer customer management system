@@ -1,0 +1,177 @@
+import mysql.connector
+config=mysql.connector.connect (host='localhost',port='3308',user='root',password='root',db='farmer customer management system')
+a1=config.cursor()
+print("***********************************************************************")
+print("\n")
+print("WELCOME TO THE WORLD OF RICE")
+print("                                                     -Stay Hungry Stay Foolish")
+print("\n")
+print("Who You Are? ")
+print("\n	1.EMPLOYEE")
+print("\n	2.RETAILER")
+print("\n       3.VENDOR")
+print("\n       4.ADMIN")
+ur=int(input("\nEnter 1 or 2  or 3 or 4 =>  "))
+if ur==1:
+        print("\n 1.Insert details")
+        print("|n 2.Update details")
+        ach=int(input("\n Select the option"))
+        if ach==1 :
+            a1=config.cursor()
+            t=[1001,'ram',8000,1]
+            t[0]=int(input("\nEnter the id =>"))
+            t[1]=input("\nEnter your name:")
+            t[2]=int(input("\n Enter your salary details =>"))
+            t[3]=int(input("\n Enter the vendor id =>  "))
+            ch=str(input("\nConform Details...type Y or N=>"))
+            sql="INSERT INTO employee(empid, empname, salary,vid) VALUES (%s,%s,%s,%s)"
+            a1.execute(sql,t)
+            config.commit()
+            print("\nEntered successfully")
+        elif ach==2:
+            a1=config.cursor()
+            empid=int(input("Enter the empid to be updated"))
+            sal=int(input("Enter the salary to be updated"))
+            vid=int(input("Enter the vendor to be changed"))
+            sql="UPDATE employee SET salary='%s',vid='%s' WHERE empid='%s'"%(sal,vid,empid)
+            a1.execute(sql,empid)
+            a1.execute(sql,sal)
+            a1.execute(sql,vid)
+            config.commit()
+            print("\n Updated Successfully")
+        else:
+            print("\nInvalid choice of search")
+            sch="N"
+        sch=input("\nWant to search More (type Y or N)  =>  ")	
+elif ur==2:
+    sch="Y"
+    while sch=="Y" or sch=="y":
+        print("#######################")
+        print("\n1.Search By farmerid")
+        print("\n2.Search By Rice name")
+        print("\n3.Search By vendorname")
+        print("\n#######################")
+        ach=int(input("\nEnter your mode of search  =>  "))
+        if ach==1:
+            a1=config.cursor()
+            t1=int(input("\nEnter Farmerid looking for  =>  "))
+            s1 ="SELECT * FROM farmer WHERE fid='%s'"%(t1)
+            a1.execute(s1,t1)
+            data=a1.fetchall()
+            config.commit()
+            print(data)
+        elif ach==2:
+            a2=config.cursor()
+            t1=input("\nEnter ricename for  =>  ")
+            s1="SELECT * FROM rice WHERE ricename='%s'"%(t1)
+            a2.execute(s1,t1)
+            data=a2.fetchall()
+            print(data)
+        elif ach==3:
+            a2=config.cursor()
+            t1=input("\nEnter the vendor name")
+            s1="SELECT * FROM vendor WHERE vname='%s'"%(t1)
+            a2.execute(s1,t1)
+            data=a2.fetchall()
+            print(data)
+        else:
+            print("\nInvalid choice of search")
+            sch="N"
+        sch=input("\nWant to search More (type Y or N)  =>  ")	
+elif ur==3:
+    sch="Y"
+    while sch=="Y" or sch=="y":
+        print("#######################")
+        print("\n1.Update vendor details ")
+        print("\n2.Search By Rice name")
+        print("\n3.Search By farmer")
+        print("\n#######################")
+        ach=int(input("\nEnter your mode of search  =>"))
+        if ach==1:
+            t1=input("\nEnter vendor name =>  ")
+            t2=int(input("Enter the farmer id:"))
+            t3=int(input("Enter the vendor id:"))
+            s1="UPDATE vendor SET vname='%s',fid='%s' WHERE vid='%s'"%(t1,t2,t3)
+            a3=config.cursor()
+            a3.execute(s1,t1)
+            a3.execute(s1,t2)
+            a3.execute(s1,t3)
+            config.commit()
+            print("\nUpdated Successfully")
+        elif ach==2:
+            t1=input("\nEnter ricename for  =>  ")
+            s1="SELECT * FROM rice WHERE ricename='%s'"%(t1)
+            a3=config.cursor()
+            a3.execute(s1,t1)
+            data=a3.fetchall()
+            print(data)
+        
+        elif ach==3:
+            t1=int(input("\nEnter Farmerid looking for  =>  "))
+            s1="SELECT * FROM farmer WHERE fid='%s'"%(t1)
+            a3=config.cursor()
+            a3.execute(s1,t1)
+            data=a3.fetchall()
+            print(data)
+        else:
+            print("\nInvalid choice of search")
+            sch="N"
+        sch=input("\nWant to search More (type Y or N)  =>  ")	
+
+elif ur==4:
+    sch="Y"
+    while sch=="Y" or sch=="y":
+        print("#######################")
+        print("\n1.Update details of farmer")
+        print("\n2.Update details of rice")
+        print("\n3.Update details of customer")
+        print("\n#######################")
+        ach=int(input("\nEnter your mode of search  =>  "))
+        if ach==1:
+            t1=int(input("Enter the qty produced:"))
+            t2=int(input("Enter the qty sold:"))
+            t3=int(input("Enter the riceid :"))
+            t4=int(input("Enter the farmerid:"))
+            s1="UPDATE farmer SET qtypro='%s',qtysold='%s',riceid='%s' WHERE fid='%s'"%(t1,t2,t3,t4)
+            a4=config.cursor()
+            a4.execute(s1,t1)
+            a4.execute(s1,t2)
+            a4.execute(s1,t3)
+            a4.execute(s1,t4)
+            config.commit()
+            print("\n Updated successfully")
+        elif ach==2:
+            t1=input("Enter the ricename:")
+            t2=input("Enter the quality:")
+            t3=int(input("Enter the quantity:"))
+            t4=int(input("Enter the riceid"))
+            s1="UPDATE rice SET ricename='%s',quality='%s',quantity='%s' WHERE riceid='%s'"%(t1,t2,t3,t4)
+            a4=config.cursor()
+            config.commit()
+            a4.execute(s1,t1)
+            a4.execute(s1,t2)
+            a4.execute(s1,t3)
+            a4.execute(s1,t4)
+            print("\n Updated Successfully")
+        elif ach==3:
+            t1=int(input("Enter the custid:"))
+            t2=input("Enter the custname:")
+            t3=int(input("Enter the empid:"))
+            s1="UPDATE customer SET empid='%s',custname='%s' WHERE custid='%s'"%(t3,t2,t1)
+            a5=config.cursor()
+            config.commit()
+            a5.execute(s1,t1)
+            a5.execute(s1,t2)
+            a5.execute(s1,t3)
+            print("\n Updated Successfully")
+        else:
+            print("\nInvalid choice of search")
+            sch="N"
+        sch=input("\nWant to search More (type Y or N)  =>  ")	
+
+else:
+    print("Invalid option")
+config.close()
+print("\n***********************************************************************************")
+print("\n---------------------THANK YOU!!!!!------------------------------------------------------")
+print("\nA Project By Team DYNAMIC DUDES")
